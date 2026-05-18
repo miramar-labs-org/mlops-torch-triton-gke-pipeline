@@ -52,16 +52,10 @@ def main():
     dataset = load_dataset("imdb")
 
     cols = ["input_ids", "attention_mask", "label"]
-    train_ds = (
-        dataset["train"]
-        .map(lambda b: tokenize_batch(b, tokenizer), batched=True)
-        .with_format("torch", columns=cols)
-    )
-    test_ds = (
-        dataset["test"]
-        .map(lambda b: tokenize_batch(b, tokenizer), batched=True)
-        .with_format("torch", columns=cols)
-    )
+    train_ds = dataset["train"].map(lambda b: tokenize_batch(b, tokenizer), batched=True)
+    train_ds.set_format("torch", columns=cols)
+    test_ds = dataset["test"].map(lambda b: tokenize_batch(b, tokenizer), batched=True)
+    test_ds.set_format("torch", columns=cols)
 
     train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True)
     test_loader = DataLoader(test_ds, batch_size=BATCH_SIZE)
