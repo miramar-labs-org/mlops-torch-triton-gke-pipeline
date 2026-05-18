@@ -4,9 +4,10 @@ RUN pip install --no-cache-dir \
     transformers \
     datasets \
     mlflow \
-    onnx
+    onnx \
+    pytest
 
-COPY ml/train.py /app/train.py
+COPY ml/train.py ml/test_train.py /app/
 WORKDIR /app
 
 ENTRYPOINT ["python", "train.py"]

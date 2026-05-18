@@ -25,6 +25,9 @@ jobs:
       - name: Build training image
         run: docker build -f ml/Dockerfile.train -t ml-trainer:latest .
 
+      - name: Test
+        run: docker run --rm ml-trainer:latest python -m pytest test_train.py -v
+
       - name: Train model
         run: |
           mkdir -p ml/output
