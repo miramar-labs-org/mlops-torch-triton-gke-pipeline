@@ -48,20 +48,40 @@ workflow_dispatch
 | Export format | ONNX (opset 14) |
 | Inference backend | Triton ONNX Runtime |
 
-## MLflow Setup (one-time on DGX host)
+## MLflow
 
-MLflow runs on the DGX and is accessible to training containers via `host.docker.internal:5000`.
+MLflow runs on the DGX host and is accessible to training containers via `host.docker.internal:5000`.
 
+| Detail | Value |
+|---|---|
+| DGX folder | `/home/aaron/mlflow` |
+| Python env | `pyMlFlow` virtualenv (pyenv) |
+| Port | `5000` |
+| tmux session | `mlflow` |
+
+**Start the server on the DGX:**
 ```bash
-pip install mlflow
-mlflow server \
+cd /home/aaron/mlflow
+pyenv activate pyMlFlow
+tmux new -s mlflow
+python -m mlflow server \
   --host 0.0.0.0 \
   --port 5000 \
   --backend-store-uri sqlite:///mlflow.db \
   --default-artifact-root ./mlartifacts
+# Ctrl+B then D to detach
 ```
 
-Access the UI at `http://localhost:5000` (or via SSH port-forward from another machine).
+**Reattach to check logs:**
+```bash
+tmux attach -t mlflow
+```
+
+**Access the UI from your laptop** (SSH tunnel):
+```powershell
+ssh -L 5000:localhost:5000 aaron@spark-79b7.local
+```
+Then open **http://localhost:5000** in your browser.
 
 ## GCP / GKE
 
