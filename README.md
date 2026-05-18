@@ -94,6 +94,8 @@ Two self-hosted runners are required. The runner image and launch scripts live i
 | DGX Station | `dgx` | `spark-79b7.local` (ARM64) | GPU training |
 | MSI WSL2 | `wsl2` | MSI desktop (x86_64) | Triton image build + GKE deploy |
 
+Both training and test containers mount `$HOME/.cache/huggingface` from the DGX host so the `distilbert-base-uncased` tokenizer and IMDB dataset (~200 MB) are downloaded once and reused across runs.
+
 ## GitHub Secrets and Variables
 
 | Name | Scope | Type | Description |
