@@ -1,7 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
-TOKEN="${1:?Usage: launch.sh <RUNNER_TOKEN>}"
+TOKEN="${1:?Usage: launch.sh <RUNNER_TOKEN> [REPO_URL]}"
+REPO_URL="${2:-https://github.com/miramar-labs/mlops-pipeline}"
 
 # Detect arch
 case "$(uname -m)" in
@@ -28,7 +29,7 @@ docker run -d --restart unless-stopped \
   --name github-runner \
   -v /var/run/docker.sock:/var/run/docker.sock \
   --group-add "$DOCKER_GID" \
-  -e REPO_URL=https://github.com/miramar-labs/github-actions-hello \
+  -e REPO_URL="$REPO_URL" \
   -e RUNNER_TOKEN="$TOKEN" \
   -e RUNNER_NAME="$RUNNER_NAME" \
   -e RUNNER_LABELS="$RUNNER_LABELS" \
