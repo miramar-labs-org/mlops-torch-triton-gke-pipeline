@@ -11,7 +11,7 @@ GPU ML training pipeline: fine-tune DistilBERT for text classification on a DGX 
 - **[GCP Artifact Registry](https://console.cloud.google.com/artifacts/docker/miramar-platform/us-west1/apps?project=miramar-platform)** — `us-west1-docker.pkg.dev/miramar-platform/apps/triton-text-classifier`
 - **[GKE Workloads](https://console.cloud.google.com/kubernetes/workload/overview?project=miramar-platform)** — `triton` deployment in namespace `mlops-torch-triton-gke-pipeline` on `miramar-shared-gke`
 - **[GitHub Actions](https://github.com/miramar-labs-org/mlops-torch-triton-gke-pipeline/actions)** — workflow run history
-- **[MLflow UI](http://spark-79b7.local:5000)** — experiment tracking on DGX (`ssh -L 5000:localhost:5000 aaron@spark-79b7.local` if not on local network)
+- **[MLflow UI](http://localhost:5000)** — experiment tracking on DGX; requires SSH tunnel: `ssh -L 5000:localhost:5000 aaron@spark-79b7.local`
 
 ## Local Development
 
@@ -29,7 +29,7 @@ VS Code will use the `pyTriton` interpreter automatically via `.python-version`.
 ## Pipeline
 
 ```
-ML Train Test — workflow_dispatch or push to ml/ (dgx, ARM64)
+ML Train Test — workflow_dispatch or push to ml/{train.py,test_train.py,Dockerfile.train} (dgx, ARM64)
   ├── docker build → ml-trainer image
   └── pytest → test_train.py
 
@@ -51,7 +51,7 @@ ML Deploy — triggered by ML Train success (wsl2, x86_64)
 
 | Workflow | File | Runner | Trigger |
 |---|---|---|---|
-| **ML Train Test** | `ml-train-test.yaml` | `dgx` | Push to `ml/` or manual |
+| **ML Train Test** | `ml-train-test.yaml` | `dgx` | Push to `ml/train.py`, `test_train.py`, or `Dockerfile.train`; or manual |
 | **ML Train** | `ml-train.yaml` | `dgx` | Auto on ML Train Test success; or manual |
 | **ML Deploy** | `ml-deploy.yaml` | `wsl2` | Auto on ML Train success |
 
