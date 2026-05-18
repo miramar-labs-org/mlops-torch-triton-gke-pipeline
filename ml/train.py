@@ -4,7 +4,6 @@ import dill._dill
 if not hasattr(dill._dill, "PY3"):
     dill._dill.PY3 = True
 
-import mlflow
 import torch
 from datasets import load_dataset
 from torch.utils.data import DataLoader
@@ -41,6 +40,7 @@ def evaluate(model, loader, device):
 
 
 def main():
+    import mlflow
     mlflow.set_tracking_uri(os.environ.get("MLFLOW_TRACKING_URI", "http://localhost:5000"))
     mlflow.set_experiment(os.environ.get("MLFLOW_EXPERIMENT_NAME", "text-classifier"))
 
