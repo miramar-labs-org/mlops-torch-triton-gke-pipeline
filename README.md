@@ -107,7 +107,7 @@ Then open **http://localhost:5000** in your browser.
 
 ## Runners
 
-Two self-hosted runners are required. The runner image (`ghcr.io/miramar-labs/github-runner:latest`) and launch scripts live in [github-actions-hello](https://github.com/miramar-labs/github-actions-hello). This repo includes a copy of `runner/` for convenience.
+Two self-hosted runners are required. The runner image (`ghcr.io/miramar-labs/github-runner-mlops-torch-triton-gke-pipeline:latest`) and launch scripts live in [github-actions-hello](https://github.com/miramar-labs/github-actions-hello). This repo includes a copy of `runner/` for convenience.
 
 | Runner | Label | Host | Used for |
 |---|---|---|---|

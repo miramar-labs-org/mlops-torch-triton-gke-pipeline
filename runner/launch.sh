@@ -15,7 +15,7 @@ case "$(uname -m)" in
   *) echo "Unknown arch: $(uname -m)"; exit 1 ;;
 esac
 
-IMAGE=ghcr.io/miramar-labs/github-runner:latest
+IMAGE=ghcr.io/miramar-labs/github-runner-mlops-torch-triton-gke-pipeline:latest
 DOCKER_GID=$(stat -c '%g' /var/run/docker.sock)
 
 echo "Runner:    $RUNNER_NAME ($RUNNER_LABELS) on $(uname -m)"

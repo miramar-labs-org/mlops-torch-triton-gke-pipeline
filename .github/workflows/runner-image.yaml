@@ -40,7 +40,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/miramar-labs/github-runner:latest
-            ghcr.io/miramar-labs/github-runner:${{ github.sha }}
-          cache-from: type=registry,ref=ghcr.io/miramar-labs/github-runner:buildcache-v2
-          cache-to: type=registry,ref=ghcr.io/miramar-labs/github-runner:buildcache-v2,mode=max
+            ghcr.io/miramar-labs/github-runner-mlops-torch-triton-gke-pipeline:latest
+            ghcr.io/miramar-labs/github-runner-mlops-torch-triton-gke-pipeline:${{ github.sha }}
+          cache-from: type=registry,ref=ghcr.io/miramar-labs/github-runner-mlops-torch-triton-gke-pipeline:buildcache-v2
+          cache-to: type=registry,ref=ghcr.io/miramar-labs/github-runner-mlops-torch-triton-gke-pipeline:buildcache-v2,mode=max
