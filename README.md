@@ -30,8 +30,9 @@ VS Code will use the `pyTriton` interpreter automatically via `.python-version`.
 
 ```
 ML Train Test — workflow_dispatch or push to ml/{train.py,test_train.py,Dockerfile.train} (dgx, ARM64)
-  ├── docker build → ml-trainer image
-  └── pytest → test_train.py
+  ├── pip install → test dependencies on runner
+  ├── pytest → test_train.py  (aborts chain on failure)
+  └── docker build → ml-trainer image
 
 ML Train — triggered by ML Train Test success (dgx, ARM64, GPU)
   ├── docker build → ml-trainer image
