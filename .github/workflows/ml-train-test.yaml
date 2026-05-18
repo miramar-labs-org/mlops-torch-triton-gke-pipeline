@@ -1,6 +1,12 @@
 name: ML Train Test
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - ml/train.py
+      - ml/test_train.py
+      - ml/Dockerfile.train
   workflow_dispatch:
 
 permissions:
