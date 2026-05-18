@@ -2,7 +2,9 @@ import os
 
 import mlflow
 import torch
-from datasets import load_dataset
+from datasets import load_dataset, disable_caching
+
+disable_caching()
 from torch.utils.data import DataLoader
 from transformers import DistilBertForSequenceClassification, DistilBertTokenizerFast
 
