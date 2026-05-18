@@ -23,7 +23,7 @@ pyenv local pyTriton
 pip install -r ml/requirements.txt
 ```
 
-VS Code will use the `pyTriton` interpreter automatically via `.python-version`. Tests in `ml/test_train.py` show as **skipped** locally (no GPU/CUDA torch) and run fully in the training container on the DGX.
+VS Code will use the `pyTriton` interpreter automatically via `.python-version`.
 
 ## Pipeline
 
