@@ -4,6 +4,11 @@ on:
   workflow_run:
     workflows: ["ML Train"]
     types: [completed]
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: 'ML Train run ID to deploy (find in Actions → ML Train)'
+        required: true
 
 permissions:
   contents: read
@@ -22,7 +27,7 @@ env:
 
 jobs:
   build-and-deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
     runs-on: [self-hosted, wsl2]
     environment:
       name: gke-ml
@@ -33,8 +38,17 @@ jobs:
 
       - name: Resolve run ID and image tag
         run: |
-          echo "RUN_ID=${{ github.event.workflow_run.id }}" >> "$GITHUB_ENV"
-          echo "IMAGE_TAG=${{ github.event.workflow_run.head_sha }}" >> "$GITHUB_ENV"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            RUN_ID="${{ github.event.inputs.run_id }}"
+            SHA=$(curl -sf -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              "https://api.github.com/repos/${{ github.repository }}/actions/runs/${RUN_ID}" \
+              | python3 -c "import sys,json; print(json.load(sys.stdin)['head_sha'])")
+          else
+            RUN_ID="${{ github.event.workflow_run.id }}"
+            SHA="${{ github.event.workflow_run.head_sha }}"
+          fi
+          echo "RUN_ID=${RUN_ID}" >> "$GITHUB_ENV"
+          echo "IMAGE_TAG=${SHA}" >> "$GITHUB_ENV"
 
       - name: Download ONNX model
         uses: actions/download-artifact@v4

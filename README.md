@@ -53,7 +53,7 @@ ML Deploy — triggered by ML Train success (wsl2, x86_64)
 |---|---|---|---|
 | **ML Train Test** | `ml-train-test.yaml` | `dgx` | Push to `ml/train.py`, `test_train.py`, or `Dockerfile.train`; or manual |
 | **ML Train** | `ml-train.yaml` | `dgx` | Auto on ML Train Test success; or manual |
-| **ML Deploy** | `ml-deploy.yaml` | `wsl2` | Auto on ML Train success |
+| **ML Deploy** | `ml-deploy.yaml` | `wsl2` | Auto on ML Train success; or manual with `run_id` |
 | **GKE Cluster Expand** | [`miramar-platform-gcp`](https://github.com/miramar-labs-org/miramar-platform-gcp/actions/workflows/gke-cluster-expand.yaml) | `wsl2` | Manual only |
 | **GKE Cluster Restore** | [`miramar-platform-gcp`](https://github.com/miramar-labs-org/miramar-platform-gcp/actions/workflows/gke-cluster-restore.yaml) | `wsl2` | Manual only |
 
